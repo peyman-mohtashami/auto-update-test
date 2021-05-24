@@ -27,11 +27,11 @@ class OneTimeScheduleWorker(
 
         val contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
 
-        val channelName = context.getString(R.string.notification_update_channel_name)
+        val id = context.getString(R.string.notification_update_channel_id)
         val title = context.getString(R.string.update_notification_title)
         val content = context.getString(R.string.update_notification_content)
 
-        var builder = NotificationCompat.Builder(context, channelName)
+        val builder = NotificationCompat.Builder(context, id)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(title)
             .setContentText(content)
