@@ -56,17 +56,21 @@ class ScheduledService : Service() {
     }
 
     fun getBrowserDownloadUrl(response: String): String? {
+        println(response)
         // check if there is a new version available
         val currentVersion = getCurrentVersion()
         Log.v(TAG, "Current Version: $currentVersion")
 
         val responseObject = Json.parseToJsonElement(response);
-        val latestRelease = responseObject.jsonArray[0]
-        val tagName = latestRelease.jsonObject["tag_name"].toString().replace("\"", "")
-        if (tagName === currentVersion) {
-            return null
+        if (responseObject.jsonArray.size > 0) {
+            val latestRelease = responseObject.jsonArray[0]
+            val tagName = latestRelease.jsonObject["tag_name"]?.toString()?.replace("\"", "")
+            if (tagName !== currentVersion) {
+                return latestRelease.jsonObject["assets"]?.jsonArray?.get(0)?.jsonObject?.getValue("browser_download_url")
+                    .toString().replace("\"", "")
+            }
         }
-        return latestRelease.jsonObject["assets"]?.jsonArray?.get(0)?.jsonObject?.getValue("browser_download_url").toString().replace("\"", "")
+        return null
     }
 
     override fun onDestroy() {
@@ -98,7 +102,7 @@ class ScheduledService : Service() {
     }
 
     companion object {
-        public const val RELEASES_URL = "https://api.github.com/repos/RADAR-base/radar-prmt-android/releases"
+        public const val RELEASES_URL = "https://api.github.com/repos/peyman-mohtashami/auto-update-test/releases"
         private val TAG = ScheduledService::class.qualifiedName
         public const val DOWNLOAD_URL_KEY = "browserDownloadUrl"
     }
