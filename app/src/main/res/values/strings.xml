@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Auto Update Test 1</string>
+    <string name="update_notification_title">RADAR-base pRMT app</string>
+    <string name="update_notification_content">New version is available.\nClick to download.</string>
+    <string name="notification_update_channel_id">com.example.autoupdatetest1</string>
+    <string name="notification_update_channel_name">auto_update_test</string>
+</resources>
